@@ -56,3 +56,18 @@ function display_errors($errors=array()) {
   }
   return $output;
 }
+
+function get_and_clear_session_msg(){
+  if(isset($_SESSION['message']) && $_SESSION['message'] != ''){
+    $msg = $_SESSION['message'];
+    unset($_SESSION['message']);
+    return $msg;
+  }
+}
+
+function display_session_message(){
+  $msg = get_and_clear_session_msg();
+  if(!is_blank($msg)){
+    return '<div style="color: #0055DD;background: #fff;border: 2px solid #0055DD;padding: 1em 15px;margin: 1em 30px;width: 890px;">' .h($msg). '</div>';
+  }
+}
