@@ -275,8 +275,91 @@ function update_page($page) {
     }
 }
 
+// admins
+function find_all_admins(){
+    global $db;
   
+    $sql = "SELECT * FROM admins ORDER BY id";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    return $result;
+}
 
+function find_admin_by_id($id){
+    global $db;
+
+    $sql = "SELECT * FROM admins ";
+    $sql .= "WHERE id='" . db_escape($db, $id) . "'";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $page = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $page;
+}
+
+function insert_admin($admin){
+    global $db;
+
+    $sql = "INSERT INTO admins ";
+    $sql .= "(first_name, last_name, email, username, hashed_password) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . db_escape($db, $admin['first_name']) . "', ";
+    $sql .= "'" . db_escape($db, $admin['last_name']) . "', ";
+    $sql .= "'" . db_escape($db, $admin['email']) . "', ";
+    $sql .= "'" . db_escape($db, $admin['username']) . "', ";
+    $sql .= "'" . db_escape($db, $admin['hashed_password']) . "')";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    if($result){
+        return true;
+    }else{
+        // echo $sql . "<br/>"
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit();
+    }
+}
+
+function update_admin($admin){
+    global $db;
+
+    $sql = "UPDATE admins SET ";
+    $sql .= "first_name='" . db_escape($db, $admin['first_name']) . "', ";
+    $sql .= "last_name='" . db_escape($db, $admin['last_name']) . "', ";
+    $sql .= "email='" . db_escape($db, $admin['email']) . "', ";
+    $sql .= "username='" . db_escape($db, $admin['username']) . "', ";
+    $sql .= "hashed_password='" . db_escape($db, $admin['hashed_password']) . "' ";
+    $sql .= "WHERE id='" . db_escape($db, $admin['id']) . "' ";
+    $sql .= "LIMIT 1";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    if($result){
+        return true;
+    }else{
+        // echo $sql . "<br/>"
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit();
+    }
+}
+
+function delete_admin($admin){
+    global $db;
+
+    $sql = "DELETE FROM admins ";
+    $sql .= "WHERE id='" . db_escape($db, $admin['id']) . "' ";
+    $sql .= "LIMIT 1";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    if($result){
+        return true;
+    }else{
+        // echo $sql . "<br/>"
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit();
+    }
+}
 
 
 
