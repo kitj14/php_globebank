@@ -14,7 +14,9 @@
     <a href="<?php echo url_for('staff/subjects/index.php'); ?>">Back to list</a></br>
     
     <h1>Subject: <?php echo h($subject['menu_name']); ?></h1>
-
+    <div class="actions">
+        <a href="<?php echo url_for('/index.php?subject_id=' . h(u($subject['id'])) . '&preview=true');?>" class="action" target="_blank">Preview</a>
+    </div>
     <div class="attributes">
         <dl>
             <dt>Menu Name</dt>
