@@ -47,7 +47,7 @@ if(is_post_request()){
 ?>
 
 <div id="content">
-    <a href=<?php echo url_for('/staff/pages/index.php'); ?>>Back to List</a><br/>
+    <a href="<?php echo url_for('staff/subjects/show.php?id=' . h(u($page['subject_id']))); ?>">Back to Subject Page</a></br>
     <h1>Page edit</h1>
     <?php echo display_errors($errors); ?>
     <form action="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($id))); ?>" method="POST">

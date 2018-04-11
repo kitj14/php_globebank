@@ -1,20 +1,20 @@
 <?php require_once('../../../private/initialize.php');
 require_login();
 
-$sql = "SELECT * FROM pages ORDER BY position ASC";
-$result = mysqli_query($db, $sql);
-$page  = mysqli_fetch_assoc($result);
-$page_count = mysqli_num_rows($result) + 1;
-mysqli_free_result($result);
+    $sql = "SELECT * FROM pages ORDER BY position ASC";
+    $result = mysqli_query($db, $sql);
+    $page  = mysqli_fetch_assoc($result);
+    $page_count = mysqli_num_rows($result) + 1;
+    mysqli_free_result($result);
 
-$sql = "SELECT * FROM subjects ORDER BY menu_name";
-$result = mysqli_query($db, $sql);
-$id_count = mysqli_num_rows($result);
-mysqli_free_result($result);
+    $sql = "SELECT * FROM subjects ORDER BY menu_name";
+    $result = mysqli_query($db, $sql);
+    $id_count = mysqli_num_rows($result);
+    mysqli_free_result($result);
 
-$page['subject_id'] = $id_count;
-$page['position'] = $page_count;
-$page['menu_name'] = '';
+    $page['subject_id'] = isset($_GET['subject_id']) ? $_GET['subject_id'] : '1' ;
+    $page['position'] = $page_count;
+    $page['menu_name'] = '';
 
 if(is_post_request()){
 
@@ -43,7 +43,7 @@ if(is_post_request()){
     include(SHARED_PATH . '/staff_header.php');
 ?>
 <div id="content">
-    <a class="back-link" href="<?php echo url_for('/staff/pages/index.php');?>">Back to list</a>
+    <a class="back-link" href="<?php echo url_for('/staff/subjects/show.php?id=' . h(u($page['subject_id'])));?>">Back to Subject Page</a>
     <div class="pages new">
         <h1>Create Pages</h1>
         <?php echo display_errors($errors); ?>
@@ -56,7 +56,7 @@ if(is_post_request()){
                     $sql = "SELECT * FROM subjects ORDER BY menu_name";
                     $result = mysqli_query($db, $sql);                    
                     while($subject = mysqli_fetch_assoc($result)){ ?>
-                        <option value="<?php echo $subject['id']; ?>"><?php echo $subject['menu_name']; ?></option>
+                        <option value="<?php echo $subject['id']; ?>" <?php if($page['subject_id'] == $subject['id']) { echo "selected"; }?>><?php echo $subject['menu_name']; ?></option>
                 <?php } mysqli_free_result($result); ?>
             </select>
             <h3>Position</h3>
@@ -75,7 +75,7 @@ if(is_post_request()){
             <input type="hidden" name="visible" value="0">
             <input type="checkbox" name="visible" value="1"><br/>
             <h3>Content</h3>
-            <input type="text" name="content" value="<?php echo h($page['content']);?>"><br/><br/>
+            <input type="text" name="content"><br/><br/>
             <button type="submit" name="submit">Create Page</button><br/><br/>
         </form>        
     </div>

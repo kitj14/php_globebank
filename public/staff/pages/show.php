@@ -20,7 +20,7 @@
 
 
     <div id="content">
-        <a href="<?php echo url_for('staff/pages/index.php'); ?>">Back to list</a></br>
+        <a href="<?php echo url_for('staff/subjects/show.php?id=' . h(u($subject['id']))); ?>">Back to Subject Page</a></br>
         <h1>Page: <?php echo h($page['menu_name']); ?></h1>
         <div class="actions">
             <a href="<?php echo url_for('/index.php?id=' . h(u($page['id'])) . '&preview=true');?>" class="action" target="_blank">Preview</a>

@@ -1,5 +1,4 @@
 <?php
-
 require_once('../../../private/initialize.php');
 require_login();
 
@@ -7,6 +6,10 @@ if(!isset($_GET['id'])) {
   redirect_to(url_for('/staff/pages/index.php'));
 }
 $id = $_GET['id'];
+$sql = "SELECT * FROM pages WHERE id='" . db_escape($db, $id) . "' ";
+$result = mysqli_query($db, $sql);
+$page = mysqli_fetch_assoc($result);
+mysqli_free_result($result);
 
 if(is_post_request()) {
 
@@ -15,18 +18,13 @@ if(is_post_request()) {
     $result = mysqli_query($db, $sql);
     if($result) {
       $_SESSION['message'] = "Page was deleted successfully!";
-      redirect_to(url_for('/staff/pages/index.php'));
+      redirect_to(url_for('/staff/subjects/show.php?id=' . h(u($page['subject_id']))));
     }else{
       echo mysqli_error($db);
       db_disconnect($db);
       exit();
     } 
 
-}else{
-    $sql = "SELECT * FROM pages WHERE id='" . db_escape($db, $id) . "' ";
-    $result = mysqli_query($db, $sql);
-    $page = mysqli_fetch_assoc($result);
-    mysqli_free_result($result);
 }
 
 ?>
@@ -36,7 +34,7 @@ if(is_post_request()) {
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/staff/pages/index.php'); ?>">&laquo; Back to List</a>
+  <a href="<?php echo url_for('staff/subjects/show.php?id=' . h(u($page['subject_id']))); ?>">Back to Subject Page</a></br>
 
   <div class="subject delete">
     <h1>Delete Subject</h1>
