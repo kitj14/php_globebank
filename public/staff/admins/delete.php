@@ -1,5 +1,6 @@
 <?php
     include_once('../../../private/initialize.php');
+    require_login();
     $page_title = 'Delete Admin';
     include_once('../../../private/shared/staff_header.php');
 

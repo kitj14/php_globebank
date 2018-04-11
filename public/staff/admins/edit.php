@@ -1,5 +1,6 @@
 <?php
     include_once('../../../private/initialize.php');
+    require_login();
     $page_title = 'Edit Admin';
     include_once('../../../private/shared/staff_header.php');
 
@@ -54,7 +55,7 @@
             </dl>
             <dl>
                 <dt>Password</dt>
-                <dd><input type="text" name="password" id="" value="<?php echo h($admin['hashed_password']);?>"></dd>
+                <dd><input type="password" name="password" id=""></dd>
             </dl>
             <dl>
                 <dt>Confirm Password</dt>

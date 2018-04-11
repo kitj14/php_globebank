@@ -1,4 +1,5 @@
 <?php require_once('../../../private/initialize.php');
+require_login();
 
 $sql = "SELECT * FROM pages ORDER BY position ASC";
 $result = mysqli_query($db, $sql);
