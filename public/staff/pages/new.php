@@ -1,11 +1,6 @@
-<?php require_once('../../../private/initialize.php');
-require_login();
-
-    $sql = "SELECT * FROM pages ORDER BY position ASC";
-    $result = mysqli_query($db, $sql);
-    $page  = mysqli_fetch_assoc($result);
-    $page_count = mysqli_num_rows($result) + 1;
-    mysqli_free_result($result);
+<?php 
+    require_once('../../../private/initialize.php');
+    require_login();
 
     $sql = "SELECT * FROM subjects ORDER BY menu_name";
     $result = mysqli_query($db, $sql);
@@ -13,8 +8,8 @@ require_login();
     mysqli_free_result($result);
 
     $page['subject_id'] = isset($_GET['subject_id']) ? $_GET['subject_id'] : '1' ;
+    $page_count = count_pages_by_subject_id($page['subject_id']) + 1;
     $page['position'] = $page_count;
-    $page['menu_name'] = '';
 
 if(is_post_request()){
 
@@ -49,7 +44,7 @@ if(is_post_request()){
         <?php echo display_errors($errors); ?>
         <form action="<?php echo url_for('/staff/pages/new.php');?>" method="POST">
             <h3>Menu name</h3>
-            <input type="text" name="menu_name" value = "<?php echo h($page['menu_name']);?>"><br/>
+            <input type="text" name="menu_name"><br/>
             <h3>Subject Name</h3>
             <select name="subject_id">
                 <?php            

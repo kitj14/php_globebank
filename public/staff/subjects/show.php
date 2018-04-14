@@ -66,6 +66,7 @@
                 $sql2 = "SELECT * FROM subjects WHERE id='" . db_escape($db, $page['subject_id']) . "'";
                 $result2 = mysqli_query($db, $sql2);
                 $subject = mysqli_fetch_assoc($result2);
+                mysqli_free_result($result2);
                 $subject_name = $subject['menu_name']; // assign menu_name from subjects table to a variable            
                 echo h($subject_name); // output menu_name from subjects table          
                 ?>
@@ -79,7 +80,7 @@
         </tr>
         <?php } ?>
         </table>
-    <?php mysqli_free_result($result); mysqli_free_result($result2); ?>
+    <?php mysqli_free_result($result); ?>
     </div>
 
 

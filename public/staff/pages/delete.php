@@ -13,6 +13,10 @@ mysqli_free_result($result);
 
 if(is_post_request()) {
 
+    $old_page = find_page_by_id($id);
+    $old_position = $old_page['position'];
+    shift_page_positions($old_position, 0, $old_page['subject_id'], $id);
+
     $sql = "DELETE FROM pages WHERE id='" . db_escape($db, $id) . "' ";
     $sql .= "LIMIT 1";
     $result = mysqli_query($db, $sql);

@@ -14,10 +14,7 @@ $page = mysqli_fetch_assoc($result);
 mysqli_free_result($result);
 
 // sql query to define $page_count the total number of rows in pages table
-$sql = "SELECT * FROM pages";
-$result = mysqli_query($db, $sql);
-$page_count = mysqli_num_rows($result);
-mysqli_free_result($result);
+$page_count = count_pages_by_subject_id($page['subject_id']);
 
 if(is_post_request()){
 
